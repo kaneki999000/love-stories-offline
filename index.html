@@ -5,7 +5,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Together" />
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>Our Love Story | Together Forever</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Italiana&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
@@ -26,9 +26,17 @@
         --aurora-gradient: linear-gradient(135deg, #fde9d7 0%, #f9d5e5 50%, #e8c4f0 100%);
         --glam-gradient: linear-gradient(135deg, #ffe8f5 0%, #ffd700 20%, #ff69b4 40%, #fff0a0 60%, #e91e8c 80%, #ffd700 100%);
       }
-
+ 
       * { box-sizing: border-box; }
-
+ 
+      /* Safe area for notch & home bar */
+      body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+      }
+ 
       body {
         font-family: "Nunito", sans-serif;
         background: var(--cream);
@@ -37,7 +45,7 @@
         overflow-x: hidden;
         position: relative;
       }
-
+ 
       body::before {
         content: '';
         position: fixed;
@@ -49,7 +57,7 @@
         pointer-events: none;
         z-index: 0;
       }
-
+ 
       /* Noise texture overlay */
       body::after {
         content: '';
@@ -60,10 +68,10 @@
         pointer-events: none;
         z-index: 0;
       }
-
+ 
       .font-display { font-family: "Italiana", serif; }
       .font-serif { font-family: "Cormorant Garamond", serif; }
-
+ 
       /* Glass cards */
       .glass {
         background: rgba(255, 248, 245, 0.65);
@@ -75,7 +83,7 @@
           0 20px 60px -10px rgba(139, 34, 72, 0.10),
           inset 0 1px 0 rgba(255, 255, 255, 0.9);
       }
-
+ 
       .glass-deep {
         background: rgba(255, 248, 245, 0.85);
         backdrop-filter: blur(30px);
@@ -86,7 +94,7 @@
           0 32px 64px -20px rgba(139, 34, 72, 0.10),
           inset 0 1px 0 rgba(255, 255, 255, 1);
       }
-
+ 
       /* Profile photo */
       .profile-ring {
         position: relative;
@@ -111,7 +119,7 @@
       .shape-circle { border-radius: 50% !important; }
       .shape-square { border-radius: 2rem !important; }
       .shape-heart { clip-path: url(#heart-clip) !important; }
-
+ 
       /* Glam frame: animated rainbow sparkle ring */
       .frame-glam {
         background: linear-gradient(white, white) padding-box,
@@ -129,7 +137,7 @@
       @keyframes glamSpin {
         to { --glam-angle: 360deg; }
       }
-
+ 
       /* Glam outer glow */
       .frame-glam .glam-ring {
         position: absolute;
@@ -144,7 +152,7 @@
         pointer-events: none;
       }
       .frame-glam.shape-heart .glam-ring { border-radius: 0; }
-
+ 
       /* Glam sparkles */
       .glam-sparkle {
         position: absolute;
@@ -162,7 +170,7 @@
         50% { opacity: 0.5; }
         to   { transform: rotate(360deg) translateX(var(--radius, 75px)) rotate(-360deg); opacity: 1; }
       }
-
+ 
       /* Heart wrapper — needs overflow visible */
       .heart-wrapper {
         position: relative;
@@ -171,7 +179,7 @@
       .heart-wrapper .shape-heart {
         clip-path: url(#heart-clip);
       }
-
+ 
       /* Glow ring animation */
       .photo-glow::after {
         content: '';
@@ -185,7 +193,7 @@
         transition: opacity 0.4s;
       }
       .photo-glow:hover::after { opacity: 0.25; }
-
+ 
       /* Counter styles */
       .counter-gradient {
         background: var(--love-gradient);
@@ -199,7 +207,7 @@
         -webkit-text-fill-color: transparent;
         background-clip: text;
       }
-
+ 
       /* Heartbeat */
       .heartbeat {
         animation: heartbeat 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -212,7 +220,7 @@
         42% { transform: scale(1.08); }
         70% { transform: scale(1); }
       }
-
+ 
       /* Floating particles */
       .particle {
         position: fixed;
@@ -227,7 +235,7 @@
         85%  { opacity: 0.4; }
         100% { transform: translateY(-105vh) translateX(var(--drift)) rotate(360deg); opacity: 0; }
       }
-
+ 
       /* Button styles */
       .btn-primary {
         background: var(--love-gradient);
@@ -246,7 +254,7 @@
         box-shadow: 0 8px 28px rgba(139, 34, 72, 0.4);
       }
       .btn-primary:active { transform: translateY(0); }
-
+ 
       .btn-ghost {
         background: rgba(249, 213, 229, 0.4);
         color: var(--deep);
@@ -264,7 +272,7 @@
         border-color: rgba(212, 96, 122, 0.4);
         transform: translateY(-1px);
       }
-
+ 
       .btn-link {
         background: transparent;
         color: var(--petal);
@@ -279,7 +287,7 @@
         width: 100%;
       }
       .btn-link:hover { color: var(--rose); }
-
+ 
       /* Divider */
       .petal-divider {
         display: flex;
@@ -294,7 +302,7 @@
         height: 1px;
         background: linear-gradient(90deg, transparent, rgba(212,96,122,0.3), transparent);
       }
-
+ 
       /* Time units */
       .time-unit {
         background: rgba(249,213,229,0.3);
@@ -303,14 +311,14 @@
         min-width: 60px;
         border: 1px solid rgba(212,96,122,0.12);
       }
-
+ 
       /* Modal */
       .modal-overlay {
         background: rgba(74, 14, 42, 0.35);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
       }
-
+ 
       /* Inputs */
       .input-field {
         width: 100%;
@@ -336,7 +344,7 @@
         background-size: 1rem;
         padding-right: 2.5rem;
       }
-
+ 
       /* Option cards */
       .option-card {
         cursor: pointer;
@@ -358,7 +366,7 @@
         background: rgba(249,213,229,0.4);
         box-shadow: 0 2px 12px rgba(212,96,122,0.2);
       }
-
+ 
       /* Status badge */
       #sync-status {
         font-family: "Nunito", sans-serif;
@@ -367,7 +375,7 @@
         letter-spacing: 0.1em;
         text-transform: uppercase;
       }
-
+ 
       /* Quote card decoration */
       .quote-marks::before {
         content: '"';
@@ -380,7 +388,7 @@
         line-height: 1;
         pointer-events: none;
       }
-
+ 
       /* Scrollbar */
       .custom-scroll::-webkit-scrollbar { width: 4px; }
       .custom-scroll::-webkit-scrollbar-track { background: transparent; }
@@ -388,7 +396,7 @@
         background: rgba(212,96,122,0.3);
         border-radius: 10px;
       }
-
+ 
       /* Section fade-in */
       @keyframes fadeSlideUp {
         from { opacity: 0; transform: translateY(20px); }
@@ -402,7 +410,7 @@
       .delay-2 { animation-delay: 0.2s; }
       .delay-3 { animation-delay: 0.3s; }
       .delay-4 { animation-delay: 0.4s; }
-
+ 
       /* Shimmer on the day counter */
       @keyframes shimmer {
         0%   { background-position: -200% 0; }
@@ -427,16 +435,16 @@
         </clipPath>
       </defs>
     </svg>
-
+ 
     <!-- Particle containers -->
     <div id="particles" class="fixed inset-0 z-[1] pointer-events-none"></div>
-
+ 
     <!-- Sync status -->
     <div id="sync-status" class="fixed top-5 right-5 z-[100] px-4 py-2 rounded-full hidden text-white" style="display:none"></div>
-
+ 
     <!-- Main content -->
     <main class="relative z-10 max-w-sm mx-auto px-5 py-10 flex flex-col min-h-screen">
-
+ 
       <!-- Header -->
       <header class="text-center mb-8 animate-up">
         <p class="text-[10px] font-black uppercase tracking-[0.35em] text-rose-300 mb-1">Est. <span id="header-year">----</span></p>
@@ -447,12 +455,12 @@
           <span style="height:1px; width:32px; background: linear-gradient(90deg, rgba(212,96,122,0.4), transparent)"></span>
         </div>
       </header>
-
+ 
       <!-- Profile card -->
       <section class="glass rounded-[2.5rem] p-7 mb-5 text-center relative overflow-hidden animate-up delay-1">
         <!-- Subtle background decoration -->
         <div style="position:absolute; inset:0; background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(249,213,229,0.4), transparent 70%); pointer-events:none;"></div>
-
+ 
         <!-- Photo -->
         <div class="relative inline-block mb-6">
           <div id="main-frame" class="profile-ring frame-classic shape-circle photo-glow group cursor-pointer"
@@ -471,7 +479,7 @@
           <span style="position:absolute; bottom:-2px; left:-4px; font-size:10px; animation: heartbeat 3.5s ease-in-out infinite 0.5s;">💫</span>
           <input type="file" id="image-input" accept="image/*" class="hidden" />
         </div>
-
+ 
         <!-- Names row -->
         <div class="flex items-center justify-center gap-4 mb-7">
           <div class="text-right flex-1">
@@ -481,11 +489,11 @@
             </div>
             <p id="zodiac-1" class="text-[9px] font-black uppercase tracking-widest" style="color:var(--petal)">Aries</p>
           </div>
-
+ 
           <div class="flex flex-col items-center gap-0.5 flex-shrink-0">
             <span class="heartbeat" style="font-size:1.6rem">💝</span>
           </div>
-
+ 
           <div class="text-left flex-1">
             <div class="flex items-center gap-1">
               <p id="name-2" class="font-bold truncate" style="font-size:1.05rem; color:var(--wine)">Partner 2</p>
@@ -494,13 +502,13 @@
             <p id="zodiac-2" class="text-[9px] font-black uppercase tracking-widest" style="color:var(--petal)">Leo</p>
           </div>
         </div>
-
+ 
         <!-- Days counter -->
         <div class="mb-6 py-5" style="border-top: 1px solid rgba(212,96,122,0.12); border-bottom: 1px solid rgba(212,96,122,0.12)">
           <div id="main-counter" class="shimmer-number font-display" style="font-size:5.5rem; line-height:1; letter-spacing:-0.02em">0</div>
           <p class="text-[10px] font-black uppercase tracking-[0.3em] mt-1" style="color:rgba(139,34,72,0.35)">Days Together</p>
         </div>
-
+ 
         <!-- H/M/S row -->
         <div class="flex justify-center gap-3">
           <div class="time-unit text-center">
@@ -519,7 +527,7 @@
           </div>
         </div>
       </section>
-
+ 
       <!-- Quote card -->
       <div class="glass rounded-[2rem] px-7 py-6 mb-5 relative quote-marks animate-up delay-2">
         <p id="daily-quote" class="font-serif italic leading-relaxed" style="font-size:1.1rem; color:var(--deep); padding-top:0.5rem">
@@ -535,7 +543,7 @@
           </svg>
         </button>
       </div>
-
+ 
       <!-- Action buttons -->
       <div class="flex flex-col gap-3 mb-10 animate-up delay-3">
         <button onclick="toggleModal('profile-modal', true)" class="btn-ghost">
@@ -545,13 +553,13 @@
           Adjust Anniversary Date
         </button>
       </div>
-
+ 
       <!-- Footer note -->
       <div class="text-center animate-up delay-4">
         <p class="text-[9px] font-semibold uppercase tracking-[0.25em]" style="color:rgba(212,96,122,0.3)">Made with love ♥</p>
       </div>
     </main>
-
+ 
     <!-- ═══════════ MODAL: Personalize Profiles ═══════════ -->
     <div id="profile-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-5 modal-overlay" style="display:none">
       <div class="w-full max-w-sm glass-deep rounded-[2rem] p-7 shadow-2xl overflow-y-auto max-h-[90vh] custom-scroll">
@@ -559,7 +567,7 @@
           <h2 class="font-display text-3xl" style="color:var(--deep)">Personalize</h2>
           <p class="text-[10px] font-bold uppercase tracking-widest" style="color:var(--petal)">Make it yours</p>
         </div>
-
+ 
         <div class="space-y-5">
           <!-- Frame Selection -->
           <div>
@@ -583,7 +591,7 @@
               </div>
             </div>
           </div>
-
+ 
           <!-- Shape Selection -->
           <div>
             <label class="text-[9px] font-black uppercase tracking-widest block mb-2" style="color:var(--rose)">Photo Shape</label>
@@ -602,7 +610,7 @@
               </div>
             </div>
           </div>
-
+ 
           <!-- Partner 1 -->
           <div class="rounded-2xl p-4 space-y-3" style="background:rgba(249,213,229,0.25); border:1px solid rgba(212,96,122,0.12)">
             <p class="text-[9px] font-black uppercase tracking-widest" style="color:var(--rose)">Partner 1 · Left</p>
@@ -631,7 +639,7 @@
               </select>
             </div>
           </div>
-
+ 
           <!-- Partner 2 -->
           <div class="rounded-2xl p-4 space-y-3" style="background:rgba(249,213,229,0.25); border:1px solid rgba(212,96,122,0.12)">
             <p class="text-[9px] font-black uppercase tracking-widest" style="color:var(--rose)">Partner 2 · Right</p>
@@ -660,7 +668,7 @@
               </select>
             </div>
           </div>
-
+ 
           <!-- Save / Close -->
           <div class="flex gap-3 pt-2">
             <button onclick="saveProfiles()" class="btn-primary flex-1">Save Changes</button>
@@ -671,7 +679,7 @@
         </div>
       </div>
     </div>
-
+ 
     <!-- ═══════════ MODAL: Edit Quote ═══════════ -->
     <div id="quote-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-5 modal-overlay" style="display:none">
       <div class="w-full max-w-sm glass-deep rounded-[2rem] p-7 shadow-2xl">
@@ -688,7 +696,7 @@
         </div>
       </div>
     </div>
-
+ 
     <!-- ═══════════ MODAL: Anniversary Date ═══════════ -->
     <div id="settings-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-5 modal-overlay" style="display:none">
       <div class="w-full max-w-sm glass-deep rounded-[2rem] p-7 shadow-2xl">
@@ -703,16 +711,23 @@
         <button onclick="toggleModal('settings-modal', false)" class="btn-link">Cancel</button>
       </div>
     </div>
-
+ 
     <script>
       const tg = window.Telegram?.WebApp;
-      if (tg) { tg.expand(); tg.ready(); }
-
+      if (tg) {
+        tg.ready();
+        tg.expand();
+        if (tg.requestFullscreen) tg.requestFullscreen();
+        if (tg.setHeaderColor) tg.setHeaderColor('#fff8f5');
+        if (tg.setBackgroundColor) tg.setBackgroundColor('#fff8f5');
+        if (tg.disableVerticalSwipes) tg.disableVerticalSwipes();
+      }
+ 
       const STORAGE_KEY = "together_forever_local_data_v2";
       let anniversaryDate = new Date().toISOString().split("T")[0];
       let currentFrame = "frame-classic";
       let currentShape = "shape-circle";
-
+ 
       const ui = {
         mainFrame: document.getElementById("main-frame"),
         imageContainer: document.getElementById("image-container"),
@@ -738,70 +753,70 @@
           anniversary: document.getElementById("anniversary-input"),
         },
       };
-
+ 
       function showStatus(text, color = "#c9974c") {
         ui.syncStatus.innerText = text;
         ui.syncStatus.style.background = color;
         ui.syncStatus.style.display = "block";
         setTimeout(() => (ui.syncStatus.style.display = "none"), 2800);
       }
-
+ 
       function saveData(updates) {
         const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
         localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...existing, ...updates }));
         showStatus("✨ SAVED", "#7cba7e");
       }
-
+ 
       function loadData() {
         const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
         if (data.anniversary_date) anniversaryDate = data.anniversary_date;
         if (data.photo_url) ui.profileImage.src = data.photo_url;
-
+ 
         ui.names[0].innerText = data.name_1 || "Partner 1";
         ui.zodiacs[0].innerText = data.zodiac_1 || "Aries";
         ui.genders[0].innerText = data.gender_1 || "";
         ui.inputs.name1.value = data.name_1 || "Partner 1";
         ui.inputs.gender1.value = data.gender_1 || "";
         ui.inputs.zodiac1.value = data.zodiac_1 || "Aries";
-
+ 
         ui.names[1].innerText = data.name_2 || "Partner 2";
         ui.zodiacs[1].innerText = data.zodiac_2 || "Leo";
         ui.genders[1].innerText = data.gender_2 || "";
         ui.inputs.name2.value = data.name_2 || "Partner 2";
         ui.inputs.gender2.value = data.gender_2 || "";
         ui.inputs.zodiac2.value = data.zodiac_2 || "Leo";
-
+ 
         if (data.quote) ui.quote.innerText = data.quote;
         ui.inputs.quote.value = data.quote || "Every day is a new page in our love story.";
         ui.inputs.anniversary.value = anniversaryDate;
-
+ 
         currentFrame = data.frame_style || "frame-classic";
         currentShape = data.photo_shape || "shape-circle";
         applyVisuals();
         updateCounter();
       }
-
+ 
       function applyVisuals() {
         const isGlam = currentFrame === "frame-glam";
         const isHeart = currentShape === "shape-heart";
-
+ 
         // Frame + shape classes on the ring wrapper
         ui.mainFrame.className = `profile-ring ${currentFrame} ${currentShape} photo-glow group cursor-pointer`;
-
+ 
         // Image container shape
         ui.imageContainer.className = `w-36 h-36 overflow-hidden bg-rose-50 ${currentShape} transition-all`;
-
+ 
         // Hover overlay shape
         const overlay = document.getElementById("hover-overlay");
         if (overlay) {
           overlay.style.borderRadius = isHeart ? "0" : currentShape === "shape-square" ? "2rem" : "50%";
           overlay.style.clipPath = isHeart ? "url(#heart-clip)" : "none";
         }
-
+ 
         // Glam ring glow
         const glamRing = document.getElementById("glam-ring");
         if (glamRing) glamRing.style.display = isGlam ? "block" : "none";
-
+ 
         // Glam orbiting sparkles
         const sparkleContainer = document.getElementById("glam-sparkles");
         sparkleContainer.innerHTML = "";
@@ -823,22 +838,22 @@
             sparkleContainer.appendChild(s);
           }
         }
-
+ 
         // Frame option cards
         document.querySelectorAll("[id^='opt-frame-']").forEach(c => c.classList.remove("selected"));
         const frameKey = currentFrame.replace("frame-", "");
         const frameOpt = document.getElementById(`opt-frame-${frameKey}`);
         if (frameOpt) frameOpt.classList.add("selected");
-
+ 
         // Shape option cards
         document.querySelectorAll("[id^='opt-shape-']").forEach(c => c.classList.remove("selected"));
         const shapeKey = currentShape.replace("shape-", "");
         const shapeOpt = document.getElementById(`opt-shape-${shapeKey}`);
         if (shapeOpt) shapeOpt.classList.add("selected");
       }
-
+ 
       function selectShape(s) { currentShape = s; applyVisuals(); }
-
+ 
       function updateCounter() {
         const start = new Date(anniversaryDate);
         const now = new Date();
@@ -850,7 +865,7 @@
         ui.seconds.innerText = Math.floor((diff / 1000) % 60);
         ui.headerYear.innerText = start.getFullYear();
       }
-
+ 
       function saveProfiles() {
         const u = {
           name_1: ui.inputs.name1.value, gender_1: ui.inputs.gender1.value,
@@ -863,28 +878,28 @@
         saveData(u);
         toggleModal("profile-modal", false);
       }
-
+ 
       function saveQuote() {
         const txt = ui.inputs.quote.value;
         ui.quote.innerText = txt;
         saveData({ quote: txt });
         toggleModal("quote-modal", false);
       }
-
+ 
       function saveAnniversary() {
         anniversaryDate = ui.inputs.anniversary.value;
         saveData({ anniversary_date: anniversaryDate });
         updateCounter();
         toggleModal("settings-modal", false);
       }
-
+ 
       function selectFrame(f) { currentFrame = f; applyVisuals(); }
-
+ 
       function toggleModal(id, show) {
         const el = document.getElementById(id);
         el.style.display = show ? "flex" : "none";
       }
-
+ 
       // Image upload
       document.getElementById("image-input").addEventListener("change", function(e) {
         const file = e.target.files[0];
@@ -894,7 +909,7 @@
         reader.onload = (ev) => { ui.profileImage.src = ev.target.result; saveData({ photo_url: ev.target.result }); };
         reader.readAsDataURL(file);
       });
-
+ 
       // Particles
       const EMOJIS = ["🌸", "✨", "🌷", "💕", "❤️", "🫧", "🌹"];
       function createParticle() {
@@ -910,7 +925,7 @@
         document.getElementById("particles").appendChild(p);
         setTimeout(() => p.remove(), 20000);
       }
-
+ 
       setInterval(createParticle, 3000);
       setInterval(updateCounter, 1000);
       window.onload = loadData;
