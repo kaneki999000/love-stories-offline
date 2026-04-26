@@ -1,494 +1,919 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-<meta name="apple-mobile-web-app-title" content="Together">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Together" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Our Love Story | Together Forever</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Italiana&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root {
-            --rose-50: #fff1f2;
-            --rose-100: #ffe4e6;
-            --rose-200: #fecdd3;
-            --rose-400: #fb7185;
-            --rose-500: #f43f5e;
-            --rose-600: #e11d48;
-            --love-gradient: linear-gradient(135deg, #fb7185 0%, #e11d48 100%);
-            --gold-gradient: linear-gradient(135deg, #fde68a 0%, #f59e0b 100%);
-            --soft-gradient: linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%);
-        }
+      :root {
+        --blush: #f9d5e5;
+        --petal: #f0a8c0;
+        --rose: #d4607a;
+        --deep: #8b2248;
+        --wine: #4a0e2a;
+        --cream: #fff8f5;
+        --peach: #fde9d7;
+        --gold: #c9974c;
+        --gold-light: #f0d090;
+        --love-gradient: linear-gradient(135deg, #d4607a 0%, #8b2248 100%);
+        --gold-gradient: linear-gradient(135deg, #f0d090 0%, #c9974c 100%);
+        --aurora-gradient: linear-gradient(135deg, #fde9d7 0%, #f9d5e5 50%, #e8c4f0 100%);
+        --glam-gradient: linear-gradient(135deg, #ffe8f5 0%, #ffd700 20%, #ff69b4 40%, #fff0a0 60%, #e91e8c 80%, #ffd700 100%);
+      }
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: radial-gradient(circle at top left, #fff1f2, #ffe4e6 40%, #ffdada 100%);
-            min-height: 100vh;
-            color: #4c0519;
-            overflow-x: hidden;
-        }
+      * { box-sizing: border-box; }
 
-        .font-cursive { font-family: 'Dancing Script', cursive; }
-        .font-serif { font-family: 'Playfair Display', serif; }
+      body {
+        font-family: "Nunito", sans-serif;
+        background: var(--cream);
+        min-height: 100vh;
+        color: var(--wine);
+        overflow-x: hidden;
+        position: relative;
+      }
 
-        .glass {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            box-shadow: 0 20px 50px -15px rgba(225, 29, 72, 0.1);
-        }
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(ellipse 80% 60% at 20% 0%, rgba(249,213,229,0.7) 0%, transparent 60%),
+          radial-gradient(ellipse 60% 50% at 80% 100%, rgba(240,168,192,0.4) 0%, transparent 60%),
+          radial-gradient(ellipse 50% 40% at 50% 50%, rgba(253,233,215,0.5) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+      }
 
-        /* Shape Utilities */
-        .shape-circle { border-radius: 50% !important; }
-        .shape-square { border-radius: 2.5rem !important; }
-        .shape-heart { clip-path: url(#heart-clip) !important; }
+      /* Noise texture overlay */
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+        opacity: 0.4;
+        pointer-events: none;
+        z-index: 0;
+      }
 
-        .profile-ring {
-            position: relative;
-            padding: 8px;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+      .font-display { font-family: "Italiana", serif; }
+      .font-serif { font-family: "Cormorant Garamond", serif; }
 
-        .frame-classic { background: linear-gradient(white, white) padding-box, var(--love-gradient) border-box; border: 4px solid transparent; }
-        .frame-gold { background: linear-gradient(white, white) padding-box, var(--gold-gradient) border-box; border: 6px solid transparent; }
-        .frame-soft { background: linear-gradient(white, white) padding-box, var(--soft-gradient) border-box; border: 4px solid transparent; }
+      /* Glass cards */
+      .glass {
+        background: rgba(255, 248, 245, 0.65);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        box-shadow:
+          0 4px 6px -1px rgba(139, 34, 72, 0.04),
+          0 20px 60px -10px rgba(139, 34, 72, 0.10),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      }
 
-        .heart-glow { animation: heartbeat 2s ease-in-out infinite; }
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
+      .glass-deep {
+        background: rgba(255, 248, 245, 0.85);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        box-shadow:
+          0 8px 32px -8px rgba(139, 34, 72, 0.15),
+          0 32px 64px -20px rgba(139, 34, 72, 0.10),
+          inset 0 1px 0 rgba(255, 255, 255, 1);
+      }
 
-        .counter-gradient {
-            background: var(--love-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+      /* Profile photo */
+      .profile-ring {
+        position: relative;
+        padding: 5px;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .frame-classic {
+        background: linear-gradient(white, white) padding-box,
+                    var(--love-gradient) border-box;
+        border: 4px solid transparent;
+      }
+      .frame-gold {
+        background: linear-gradient(white, white) padding-box,
+                    var(--gold-gradient) border-box;
+        border: 5px solid transparent;
+      }
+      .frame-soft {
+        background: linear-gradient(white, white) padding-box,
+                    var(--aurora-gradient) border-box;
+        border: 4px solid transparent;
+      }
+      .shape-circle { border-radius: 50% !important; }
+      .shape-square { border-radius: 2rem !important; }
+      .shape-heart { clip-path: url(#heart-clip) !important; }
 
-        .bubble, .heart-particle {
-            position: fixed;
-            pointer-events: none;
-            opacity: 0.3;
-            animation: floatUp linear infinite;
-        }
+      /* Glam frame: animated rainbow sparkle ring */
+      .frame-glam {
+        background: linear-gradient(white, white) padding-box,
+                    conic-gradient(from var(--glam-angle, 0deg),
+                      #ffd700, #ff69b4, #fff0a0, #e91e8c, #ffd700, #ff9de2, #fffaaa, #ffd700
+                    ) border-box;
+        border: 5px solid transparent;
+        animation: glamSpin 2.5s linear infinite;
+      }
+      @property --glam-angle {
+        syntax: '<angle>';
+        initial-value: 0deg;
+        inherits: false;
+      }
+      @keyframes glamSpin {
+        to { --glam-angle: 360deg; }
+      }
 
-        @keyframes floatUp {
-            0% { transform: translateY(0) translateX(0); opacity: 0; }
-            20% { opacity: 0.3; }
-            80% { opacity: 0.3; }
-            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
-        }
+      /* Glam outer glow */
+      .frame-glam .glam-ring {
+        position: absolute;
+        inset: -10px;
+        border-radius: 50%;
+        background: conic-gradient(from var(--glam-angle, 0deg),
+          rgba(255,215,0,0.4), rgba(255,105,180,0.4), rgba(255,255,0,0.3), rgba(233,30,140,0.4), rgba(255,215,0,0.4)
+        );
+        filter: blur(8px);
+        z-index: -1;
+        animation: glamSpin 2.5s linear infinite;
+        pointer-events: none;
+      }
+      .frame-glam.shape-heart .glam-ring { border-radius: 0; }
 
-        .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #fecdd3; border-radius: 10px; }
+      /* Glam sparkles */
+      .glam-sparkle {
+        position: absolute;
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: #ffd700;
+        animation: sparkleOrbit var(--dur, 2s) linear infinite;
+        transform-origin: var(--ox, 0px) var(--oy, 0px);
+        box-shadow: 0 0 4px 2px rgba(255,215,0,0.7);
+        pointer-events: none;
+        z-index: 10;
+      }
+      @keyframes sparkleOrbit {
+        from { transform: rotate(0deg) translateX(var(--radius, 75px)) rotate(0deg); opacity: 1; }
+        50% { opacity: 0.5; }
+        to   { transform: rotate(360deg) translateX(var(--radius, 75px)) rotate(-360deg); opacity: 1; }
+      }
 
-        .option-card { cursor: pointer; border: 2px solid transparent; transition: all 0.3s; border-radius: 1rem; padding: 0.5rem; }
-        .option-card.selected { border-color: var(--rose-400); background: var(--rose-50); }
+      /* Heart wrapper — needs overflow visible */
+      .heart-wrapper {
+        position: relative;
+        display: inline-block;
+      }
+      .heart-wrapper .shape-heart {
+        clip-path: url(#heart-clip);
+      }
 
-        .modal-overlay {
-            background: rgba(76, 5, 25, 0.4);
-            backdrop-filter: blur(8px);
-        }
+      /* Glow ring animation */
+      .photo-glow::after {
+        content: '';
+        position: absolute;
+        inset: -8px;
+        border-radius: 50%;
+        background: var(--love-gradient);
+        opacity: 0;
+        filter: blur(12px);
+        z-index: -1;
+        transition: opacity 0.4s;
+      }
+      .photo-glow:hover::after { opacity: 0.25; }
 
-        select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23e11d48'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1rem;
-        }
+      /* Counter styles */
+      .counter-gradient {
+        background: var(--love-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .gold-text {
+        background: var(--gold-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Heartbeat */
+      .heartbeat {
+        animation: heartbeat 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        display: inline-block;
+      }
+      @keyframes heartbeat {
+        0%, 100% { transform: scale(1); }
+        14% { transform: scale(1.12); }
+        28% { transform: scale(1); }
+        42% { transform: scale(1.08); }
+        70% { transform: scale(1); }
+      }
+
+      /* Floating particles */
+      .particle {
+        position: fixed;
+        pointer-events: none;
+        animation: floatUp linear infinite;
+        opacity: 0;
+        z-index: 1;
+      }
+      @keyframes floatUp {
+        0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+        10%  { opacity: 0.6; }
+        85%  { opacity: 0.4; }
+        100% { transform: translateY(-105vh) translateX(var(--drift)) rotate(360deg); opacity: 0; }
+      }
+
+      /* Button styles */
+      .btn-primary {
+        background: var(--love-gradient);
+        color: white;
+        font-weight: 700;
+        border-radius: 1.25rem;
+        padding: 1rem 1.5rem;
+        transition: all 0.25s;
+        box-shadow: 0 4px 20px rgba(139, 34, 72, 0.3);
+        letter-spacing: 0.02em;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(139, 34, 72, 0.4);
+      }
+      .btn-primary:active { transform: translateY(0); }
+
+      .btn-ghost {
+        background: rgba(249, 213, 229, 0.4);
+        color: var(--deep);
+        font-weight: 600;
+        border-radius: 1.25rem;
+        padding: 0.9rem 1.5rem;
+        transition: all 0.25s;
+        border: 1.5px solid rgba(212, 96, 122, 0.2);
+        cursor: pointer;
+        width: 100%;
+        text-align: center;
+      }
+      .btn-ghost:hover {
+        background: rgba(249, 213, 229, 0.7);
+        border-color: rgba(212, 96, 122, 0.4);
+        transform: translateY(-1px);
+      }
+
+      .btn-link {
+        background: transparent;
+        color: var(--petal);
+        font-size: 0.65rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        cursor: pointer;
+        border: none;
+        transition: color 0.2s;
+        padding: 0.5rem;
+        width: 100%;
+      }
+      .btn-link:hover { color: var(--rose); }
+
+      /* Divider */
+      .petal-divider {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--petal);
+      }
+      .petal-divider::before,
+      .petal-divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(212,96,122,0.3), transparent);
+      }
+
+      /* Time units */
+      .time-unit {
+        background: rgba(249,213,229,0.3);
+        border-radius: 1rem;
+        padding: 0.6rem 0.4rem;
+        min-width: 60px;
+        border: 1px solid rgba(212,96,122,0.12);
+      }
+
+      /* Modal */
+      .modal-overlay {
+        background: rgba(74, 14, 42, 0.35);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      /* Inputs */
+      .input-field {
+        width: 100%;
+        background: rgba(255,248,245,0.8);
+        border: 1.5px solid rgba(212,96,122,0.2);
+        border-radius: 0.9rem;
+        padding: 0.65rem 0.9rem;
+        font-size: 0.875rem;
+        font-family: "Nunito", sans-serif;
+        color: var(--wine);
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        appearance: none;
+      }
+      .input-field:focus {
+        border-color: rgba(212,96,122,0.5);
+        box-shadow: 0 0 0 3px rgba(212,96,122,0.1);
+      }
+      select.input-field {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23d4607a'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 1rem;
+        padding-right: 2.5rem;
+      }
+
+      /* Option cards */
+      .option-card {
+        cursor: pointer;
+        border: 2px solid rgba(212,96,122,0.15);
+        border-radius: 1rem;
+        padding: 0.6rem 0.8rem;
+        transition: all 0.25s;
+        background: rgba(255,248,245,0.5);
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      .option-card:hover {
+        border-color: rgba(212,96,122,0.4);
+        background: rgba(249,213,229,0.3);
+      }
+      .option-card.selected {
+        border-color: var(--rose);
+        background: rgba(249,213,229,0.4);
+        box-shadow: 0 2px 12px rgba(212,96,122,0.2);
+      }
+
+      /* Status badge */
+      #sync-status {
+        font-family: "Nunito", sans-serif;
+        font-size: 0.6rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      /* Quote card decoration */
+      .quote-marks::before {
+        content: '"';
+        font-family: "Cormorant Garamond", serif;
+        font-size: 4rem;
+        color: rgba(212,96,122,0.15);
+        position: absolute;
+        top: -0.5rem;
+        left: 1rem;
+        line-height: 1;
+        pointer-events: none;
+      }
+
+      /* Scrollbar */
+      .custom-scroll::-webkit-scrollbar { width: 4px; }
+      .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+      .custom-scroll::-webkit-scrollbar-thumb {
+        background: rgba(212,96,122,0.3);
+        border-radius: 10px;
+      }
+
+      /* Section fade-in */
+      @keyframes fadeSlideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      .animate-up {
+        animation: fadeSlideUp 0.6s ease forwards;
+        opacity: 0;
+      }
+      .delay-1 { animation-delay: 0.1s; }
+      .delay-2 { animation-delay: 0.2s; }
+      .delay-3 { animation-delay: 0.3s; }
+      .delay-4 { animation-delay: 0.4s; }
+
+      /* Shimmer on the day counter */
+      @keyframes shimmer {
+        0%   { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+      }
+      .shimmer-number {
+        background: linear-gradient(90deg, #d4607a 0%, #f0a8c0 30%, #8b2248 60%, #d4607a 100%);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: shimmer 4s linear infinite;
+      }
     </style>
-</head>
-<body>
-    <svg width="0" height="0" class="absolute">
-        <defs>
-            <clipPath id="heart-clip" clipPathUnits="objectBoundingBox">
-                <path d="M0.5,0.18 C0.5,0.18,0.42,0,0.25,0 C0.08,0,0,0.15,0,0.32 C0,0.55,0.2,0.75,0.5,1 C0.8,0.75,1,0.55,1,0.32 C1,0.15,0.92,0,0.75,0 C0.58,0,0.5,0.18,0.5,0.18" />
-            </clipPath>
-        </defs>
+  </head>
+  <body>
+    <!-- Heart clip-path definition -->
+    <svg width="0" height="0" class="absolute" style="position:absolute">
+      <defs>
+        <clipPath id="heart-clip" clipPathUnits="objectBoundingBox">
+          <path d="M0.5,0.85 C0.2,0.65,0,0.45,0,0.28 C0,0.12,0.1,0,0.25,0 C0.35,0,0.44,0.06,0.5,0.15 C0.56,0.06,0.65,0,0.75,0 C0.9,0,1,0.12,1,0.28 C1,0.45,0.8,0.65,0.5,0.85 Z"/>
+        </clipPath>
+      </defs>
     </svg>
 
-    <div id="particles" class="fixed inset-0 z-0"></div>
-    <div id="bubbles" class="fixed inset-0 z-0"></div>
-    
-    <div id="sync-status" class="fixed top-6 right-6 z-[100] px-4 py-2 rounded-full glass text-[10px] font-black uppercase hidden"></div>
+    <!-- Particle containers -->
+    <div id="particles" class="fixed inset-0 z-[1] pointer-events-none"></div>
 
-    <main class="relative z-10 max-w-lg mx-auto px-6 py-10 flex flex-col min-h-screen">
-        <header class="text-center mb-10">
-            <h1 class="font-cursive text-6xl text-rose-600 mb-2">Sweetheart</h1>
-            <span class="text-rose-400 text-[10px] font-bold uppercase tracking-[0.4em]">Est. <span id="header-year">----</span></span>
-        </header>
+    <!-- Sync status -->
+    <div id="sync-status" class="fixed top-5 right-5 z-[100] px-4 py-2 rounded-full hidden text-white" style="display:none"></div>
 
-        <section class="glass rounded-[3.5rem] p-8 mb-8 text-center relative overflow-hidden">
-            <div class="relative inline-block mb-8">
-                <div id="main-frame" class="profile-ring frame-classic shape-circle group cursor-pointer" onclick="document.getElementById('image-input').click()">
-                    <div id="image-container" class="w-44 h-44 overflow-hidden bg-rose-50 border-4 border-white transition-all shape-circle">
-                        <img id="profile-image" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Love" class="w-full h-full object-cover">
-                    </div>
-                    <div class="absolute inset-2 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm rounded-full">
-                        <span class="text-white text-[10px] font-bold uppercase">Change Photo</span>
-                    </div>
-                </div>
-                <input type="file" id="image-input" accept="image/*" class="hidden">
+    <!-- Main content -->
+    <main class="relative z-10 max-w-sm mx-auto px-5 py-10 flex flex-col min-h-screen">
+
+      <!-- Header -->
+      <header class="text-center mb-8 animate-up">
+        <p class="text-[10px] font-black uppercase tracking-[0.35em] text-rose-300 mb-1">Est. <span id="header-year">----</span></p>
+        <h1 class="font-display text-6xl" style="color: var(--deep); letter-spacing:0.02em; line-height:1.1">Sweetheart</h1>
+        <div class="flex items-center justify-center gap-2 mt-2">
+          <span style="height:1px; width:32px; background: linear-gradient(90deg, transparent, rgba(212,96,122,0.4))"></span>
+          <span style="font-size:0.7rem; color:var(--petal)">✦</span>
+          <span style="height:1px; width:32px; background: linear-gradient(90deg, rgba(212,96,122,0.4), transparent)"></span>
+        </div>
+      </header>
+
+      <!-- Profile card -->
+      <section class="glass rounded-[2.5rem] p-7 mb-5 text-center relative overflow-hidden animate-up delay-1">
+        <!-- Subtle background decoration -->
+        <div style="position:absolute; inset:0; background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(249,213,229,0.4), transparent 70%); pointer-events:none;"></div>
+
+        <!-- Photo -->
+        <div class="relative inline-block mb-6">
+          <div id="main-frame" class="profile-ring frame-classic shape-circle photo-glow group cursor-pointer"
+               onclick="document.getElementById('image-input').click()" style="position:relative">
+            <div class="glam-ring" id="glam-ring" style="display:none"></div>
+            <div id="glam-sparkles"></div>
+            <div id="image-container" class="w-36 h-36 overflow-hidden bg-rose-50 shape-circle transition-all">
+              <img id="profile-image" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Love" class="w-full h-full object-cover" />
             </div>
-
-            <div class="flex items-center justify-center space-x-6 mb-10">
-                <div class="text-right flex-1">
-                    <div class="flex items-center justify-end space-x-1 mb-1">
-                        <span id="gender-1" class="text-xs text-rose-300"></span>
-                        <p id="name-1" class="text-xl font-bold text-rose-950 truncate">Partner 1</p>
-                    </div>
-                    <p id="zodiac-1" class="text-[10px] text-rose-400 font-black uppercase tracking-widest">Aries</p>
-                </div>
-                <div class="heart-glow text-3xl">💝</div>
-                <div class="text-left flex-1">
-                    <div class="flex items-center justify-start space-x-1 mb-1">
-                        <p id="name-2" class="text-xl font-bold text-rose-950 truncate">Partner 2</p>
-                        <span id="gender-2" class="text-xs text-rose-300"></span>
-                    </div>
-                    <p id="zodiac-2" class="text-[10px] text-rose-400 font-black uppercase tracking-widest">Leo</p>
-                </div>
+            <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all" id="hover-overlay" style="backdrop-filter:blur(4px); border-radius:50%">
+              <span class="text-white text-[9px] font-bold uppercase tracking-wide">Change Photo</span>
             </div>
-
-            <div class="mb-10 py-6 border-y border-rose-100/50">
-                <div id="main-counter" class="text-7xl font-black counter-gradient tracking-tighter">0</div>
-                <div class="text-rose-900/20 text-xs font-black uppercase tracking-[0.4em] mt-2">Days Together</div>
-            </div>
-
-            <div class="flex justify-between items-center px-4">
-                <div class="flex flex-col items-center flex-1">
-                    <div id="count-hours" class="text-2xl font-extrabold text-rose-950">0</div>
-                    <div class="text-[9px] text-rose-400 font-black uppercase">Hours</div>
-                </div>
-                <div class="flex flex-col items-center flex-1">
-                    <div id="count-minutes" class="text-2xl font-extrabold text-rose-950">0</div>
-                    <div class="text-[9px] text-rose-400 font-black uppercase">Mins</div>
-                </div>
-                <div class="flex flex-col items-center flex-1">
-                    <div id="count-seconds" class="text-2xl font-extrabold text-rose-500">0</div>
-                    <div class="text-[9px] text-rose-400 font-black uppercase">Secs</div>
-                </div>
-            </div>
-        </section>
-
-        <div class="glass rounded-[2.5rem] p-8 mb-8 text-center italic relative">
-            <p id="daily-quote" class="text-rose-800 font-serif text-lg leading-relaxed">Every day is a new page in our love story.</p>
-            <button onclick="toggleModal('quote-modal', true)" class="absolute top-4 right-4 text-rose-200 hover:text-rose-400 transition-colors">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
+          </div>
+          <!-- Decorative sparkles -->
+          <span style="position:absolute; top:-4px; right:-2px; font-size:14px; animation: heartbeat 3s ease-in-out infinite;">✨</span>
+          <span style="position:absolute; bottom:-2px; left:-4px; font-size:10px; animation: heartbeat 3.5s ease-in-out infinite 0.5s;">💫</span>
+          <input type="file" id="image-input" accept="image/*" class="hidden" />
         </div>
 
-        <div class="flex flex-col space-y-4 mb-12">
-            <button onclick="toggleModal('profile-modal', true)" class="w-full glass bg-white/60 rounded-3xl py-5 text-rose-900 font-bold hover:bg-white/80 transition-all">Personalize Our Profile</button>
-            <button onclick="toggleModal('settings-modal', true)" class="w-full py-2 text-[10px] font-black text-rose-300 uppercase tracking-widest hover:text-rose-500 transition-colors">Adjust Anniversary Date</button>
+        <!-- Names row -->
+        <div class="flex items-center justify-center gap-4 mb-7">
+          <div class="text-right flex-1">
+            <div class="flex items-center justify-end gap-1">
+              <span id="gender-1" class="text-[11px]" style="color:var(--petal)"></span>
+              <p id="name-1" class="font-bold truncate" style="font-size:1.05rem; color:var(--wine)">Partner 1</p>
+            </div>
+            <p id="zodiac-1" class="text-[9px] font-black uppercase tracking-widest" style="color:var(--petal)">Aries</p>
+          </div>
+
+          <div class="flex flex-col items-center gap-0.5 flex-shrink-0">
+            <span class="heartbeat" style="font-size:1.6rem">💝</span>
+          </div>
+
+          <div class="text-left flex-1">
+            <div class="flex items-center gap-1">
+              <p id="name-2" class="font-bold truncate" style="font-size:1.05rem; color:var(--wine)">Partner 2</p>
+              <span id="gender-2" class="text-[11px]" style="color:var(--petal)"></span>
+            </div>
+            <p id="zodiac-2" class="text-[9px] font-black uppercase tracking-widest" style="color:var(--petal)">Leo</p>
+          </div>
         </div>
+
+        <!-- Days counter -->
+        <div class="mb-6 py-5" style="border-top: 1px solid rgba(212,96,122,0.12); border-bottom: 1px solid rgba(212,96,122,0.12)">
+          <div id="main-counter" class="shimmer-number font-display" style="font-size:5.5rem; line-height:1; letter-spacing:-0.02em">0</div>
+          <p class="text-[10px] font-black uppercase tracking-[0.3em] mt-1" style="color:rgba(139,34,72,0.35)">Days Together</p>
+        </div>
+
+        <!-- H/M/S row -->
+        <div class="flex justify-center gap-3">
+          <div class="time-unit text-center">
+            <div id="count-hours" class="text-2xl font-extrabold counter-gradient">0</div>
+            <div class="text-[8px] font-black uppercase tracking-widest" style="color:var(--petal)">Hours</div>
+          </div>
+          <div class="flex items-center" style="color:var(--petal); font-size:1.2rem; padding-bottom:0.8rem">:</div>
+          <div class="time-unit text-center">
+            <div id="count-minutes" class="text-2xl font-extrabold counter-gradient">0</div>
+            <div class="text-[8px] font-black uppercase tracking-widest" style="color:var(--petal)">Mins</div>
+          </div>
+          <div class="flex items-center" style="color:var(--petal); font-size:1.2rem; padding-bottom:0.8rem">:</div>
+          <div class="time-unit text-center">
+            <div id="count-seconds" class="text-2xl font-extrabold" style="color:var(--rose)">0</div>
+            <div class="text-[8px] font-black uppercase tracking-widest" style="color:var(--petal)">Secs</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quote card -->
+      <div class="glass rounded-[2rem] px-7 py-6 mb-5 relative quote-marks animate-up delay-2">
+        <p id="daily-quote" class="font-serif italic leading-relaxed" style="font-size:1.1rem; color:var(--deep); padding-top:0.5rem">
+          Every day is a new page in our love story.
+        </p>
+        <button onclick="toggleModal('quote-modal', true)"
+                class="absolute top-4 right-4 transition-colors"
+                style="background:none; border:none; cursor:pointer; color:rgba(212,96,122,0.3);"
+                onmouseover="this.style.color='rgba(212,96,122,0.8)'"
+                onmouseout="this.style.color='rgba(212,96,122,0.3)'">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="flex flex-col gap-3 mb-10 animate-up delay-3">
+        <button onclick="toggleModal('profile-modal', true)" class="btn-ghost">
+          <span style="font-size:0.85rem">✦ Personalize Our Profile</span>
+        </button>
+        <button onclick="toggleModal('settings-modal', true)" class="btn-link">
+          Adjust Anniversary Date
+        </button>
+      </div>
+
+      <!-- Footer note -->
+      <div class="text-center animate-up delay-4">
+        <p class="text-[9px] font-semibold uppercase tracking-[0.25em]" style="color:rgba(212,96,122,0.3)">Made with love ♥</p>
+      </div>
     </main>
 
-    <!-- Modal: Personalize Profiles -->
-    <div id="profile-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-6 modal-overlay">
-        <div class="w-full max-w-md bg-white rounded-[2.5rem] p-8 shadow-2xl overflow-y-auto max-h-[90vh] custom-scroll">
-            <h2 class="text-2xl font-bold text-rose-900 mb-6 text-center">Personalize</h2>
-            
-            <div class="space-y-6">
-                <!-- Frame Selection -->
-                <div>
-                    <label class="text-[10px] font-black text-rose-400 uppercase tracking-widest mb-3 block">Frame Style</label>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div onclick="selectFrame('frame-classic')" id="opt-frame-classic" class="option-card flex items-center space-x-3">
-                            <div class="w-6 h-6 rounded-full frame-classic"></div>
-                            <span class="text-xs font-bold">Classic</span>
-                        </div>
-                        <div onclick="selectFrame('frame-gold')" id="opt-frame-gold" class="option-card flex items-center space-x-3">
-                            <div class="w-6 h-6 rounded-full frame-gold"></div>
-                            <span class="text-xs font-bold">Gold Luxe</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Partner 1 Settings -->
-                <div class="p-4 bg-rose-50/50 rounded-2xl space-y-4">
-                    <p class="text-[10px] font-black text-rose-600 uppercase tracking-widest">Partner 1 (Left)</p>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="text-[9px] font-bold text-rose-400 uppercase mb-1 block">Name</label>
-                            <input type="text" id="input-name-1" class="w-full bg-white rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-rose-200 outline-none border border-rose-100">
-                        </div>
-                        <div>
-                            <label class="text-[9px] font-bold text-rose-400 uppercase mb-1 block">Gender</label>
-                            <select id="input-gender-1" class="w-full bg-white rounded-xl px-3 py-2 text-sm outline-none border border-rose-100">
-                                <option value="">None</option>
-                                <option value="♂">Male</option>
-                                <option value="♀">Female</option>
-                                <option value="⚧">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="text-[9px] font-bold text-rose-400 uppercase mb-1 block">Zodiac Sign</label>
-                        <select id="input-zodiac-1" class="w-full bg-white rounded-xl px-3 py-2 text-sm outline-none border border-rose-100">
-                            <option value="Aries">Aries</option><option value="Taurus">Taurus</option>
-                            <option value="Gemini">Gemini</option><option value="Cancer">Cancer</option>
-                            <option value="Leo">Leo</option><option value="Virgo">Virgo</option>
-                            <option value="Libra">Libra</option><option value="Scorpio">Scorpio</option>
-                            <option value="Sagittarius">Sagittarius</option><option value="Capricorn">Capricorn</option>
-                            <option value="Aquarius">Aquarius</option><option value="Pisces">Pisces</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Partner 2 Settings -->
-                <div class="p-4 bg-rose-50/50 rounded-2xl space-y-4">
-                    <p class="text-[10px] font-black text-rose-600 uppercase tracking-widest">Partner 2 (Right)</p>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="text-[9px] font-bold text-rose-400 uppercase mb-1 block">Name</label>
-                            <input type="text" id="input-name-2" class="w-full bg-white rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-rose-200 outline-none border border-rose-100">
-                        </div>
-                        <div>
-                            <label class="text-[9px] font-bold text-rose-400 uppercase mb-1 block">Gender</label>
-                            <select id="input-gender-2" class="w-full bg-white rounded-xl px-3 py-2 text-sm outline-none border border-rose-100">
-                                <option value="">None</option>
-                                <option value="♂">Male</option>
-                                <option value="♀">Female</option>
-                                <option value="⚧">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="text-[9px] font-bold text-rose-400 uppercase mb-1 block">Zodiac Sign</label>
-                        <select id="input-zodiac-2" class="w-full bg-white rounded-xl px-3 py-2 text-sm outline-none border border-rose-100">
-                            <option value="Aries">Aries</option><option value="Taurus">Taurus</option>
-                            <option value="Gemini">Gemini</option><option value="Cancer">Cancer</option>
-                            <option value="Leo">Leo</option><option value="Virgo">Virgo</option>
-                            <option value="Libra">Libra</option><option value="Scorpio">Scorpio</option>
-                            <option value="Sagittarius">Sagittarius</option><option value="Capricorn">Capricorn</option>
-                            <option value="Aquarius">Aquarius</option><option value="Pisces">Pisces</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="flex space-x-3 pt-4">
-                    <button onclick="saveProfiles()" class="flex-1 bg-rose-600 text-white font-bold py-4 rounded-2xl hover:bg-rose-700 transition-all">Save Changes</button>
-                    <button onclick="toggleModal('profile-modal', false)" class="px-6 py-4 text-rose-400 font-bold">Close</button>
-                </div>
-            </div>
+    <!-- ═══════════ MODAL: Personalize Profiles ═══════════ -->
+    <div id="profile-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-5 modal-overlay" style="display:none">
+      <div class="w-full max-w-sm glass-deep rounded-[2rem] p-7 shadow-2xl overflow-y-auto max-h-[90vh] custom-scroll">
+        <div class="text-center mb-6">
+          <h2 class="font-display text-3xl" style="color:var(--deep)">Personalize</h2>
+          <p class="text-[10px] font-bold uppercase tracking-widest" style="color:var(--petal)">Make it yours</p>
         </div>
+
+        <div class="space-y-5">
+          <!-- Frame Selection -->
+          <div>
+            <label class="text-[9px] font-black uppercase tracking-widest block mb-2" style="color:var(--rose)">Ring Style</label>
+            <div class="grid grid-cols-2 gap-2">
+              <div onclick="selectFrame('frame-classic')" id="opt-frame-classic" class="option-card">
+                <div class="w-5 h-5 rounded-full frame-classic flex-shrink-0"></div>
+                <span class="text-xs font-bold" style="color:var(--wine)">Classic</span>
+              </div>
+              <div onclick="selectFrame('frame-gold')" id="opt-frame-gold" class="option-card">
+                <div class="w-5 h-5 rounded-full frame-gold flex-shrink-0"></div>
+                <span class="text-xs font-bold" style="color:var(--wine)">Gold</span>
+              </div>
+              <div onclick="selectFrame('frame-soft')" id="opt-frame-soft" class="option-card">
+                <div class="w-5 h-5 rounded-full frame-soft flex-shrink-0"></div>
+                <span class="text-xs font-bold" style="color:var(--wine)">Soft</span>
+              </div>
+              <div onclick="selectFrame('frame-glam')" id="opt-frame-glam" class="option-card" style="background: linear-gradient(135deg,rgba(255,240,160,0.3),rgba(255,105,180,0.2))">
+                <div class="w-5 h-5 rounded-full flex-shrink-0" style="background: conic-gradient(#ffd700,#ff69b4,#fff0a0,#e91e8c,#ffd700); box-shadow: 0 0 6px 2px rgba(255,215,0,0.5)"></div>
+                <span class="text-xs font-black" style="background: linear-gradient(90deg,#c9974c,#e91e8c); -webkit-background-clip:text; -webkit-text-fill-color:transparent">✦ Glam</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shape Selection -->
+          <div>
+            <label class="text-[9px] font-black uppercase tracking-widest block mb-2" style="color:var(--rose)">Photo Shape</label>
+            <div class="grid grid-cols-3 gap-2">
+              <div onclick="selectShape('shape-circle')" id="opt-shape-circle" class="option-card flex-col items-center justify-center py-3">
+                <div class="w-8 h-8 rounded-full mb-1 frame-classic flex-shrink-0"></div>
+                <span class="text-[10px] font-bold" style="color:var(--wine)">Circle</span>
+              </div>
+              <div onclick="selectShape('shape-square')" id="opt-shape-square" class="option-card flex-col items-center justify-center py-3">
+                <div class="w-8 h-8 mb-1 frame-classic flex-shrink-0" style="border-radius:0.6rem"></div>
+                <span class="text-[10px] font-bold" style="color:var(--wine)">Square</span>
+              </div>
+              <div onclick="selectShape('shape-heart')" id="opt-shape-heart" class="option-card flex-col items-center justify-center py-3">
+                <div class="w-8 h-8 mb-1 flex-shrink-0 flex items-center justify-center" style="font-size:1.4rem">🩷</div>
+                <span class="text-[10px] font-bold" style="color:var(--wine)">Heart</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Partner 1 -->
+          <div class="rounded-2xl p-4 space-y-3" style="background:rgba(249,213,229,0.25); border:1px solid rgba(212,96,122,0.12)">
+            <p class="text-[9px] font-black uppercase tracking-widest" style="color:var(--rose)">Partner 1 · Left</p>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-[9px] font-bold uppercase mb-1 block" style="color:var(--petal)">Name</label>
+                <input type="text" id="input-name-1" class="input-field" placeholder="Name" />
+              </div>
+              <div>
+                <label class="text-[9px] font-bold uppercase mb-1 block" style="color:var(--petal)">Gender</label>
+                <select id="input-gender-1" class="input-field">
+                  <option value="">None</option>
+                  <option value="♂">Male</option>
+                  <option value="♀">Female</option>
+                  <option value="⚧">Other</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="text-[9px] font-bold uppercase mb-1 block" style="color:var(--petal)">Zodiac Sign</label>
+              <select id="input-zodiac-1" class="input-field">
+                <option>Aries</option><option>Taurus</option><option>Gemini</option>
+                <option>Cancer</option><option>Leo</option><option>Virgo</option>
+                <option>Libra</option><option>Scorpio</option><option>Sagittarius</option>
+                <option>Capricorn</option><option>Aquarius</option><option>Pisces</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Partner 2 -->
+          <div class="rounded-2xl p-4 space-y-3" style="background:rgba(249,213,229,0.25); border:1px solid rgba(212,96,122,0.12)">
+            <p class="text-[9px] font-black uppercase tracking-widest" style="color:var(--rose)">Partner 2 · Right</p>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-[9px] font-bold uppercase mb-1 block" style="color:var(--petal)">Name</label>
+                <input type="text" id="input-name-2" class="input-field" placeholder="Name" />
+              </div>
+              <div>
+                <label class="text-[9px] font-bold uppercase mb-1 block" style="color:var(--petal)">Gender</label>
+                <select id="input-gender-2" class="input-field">
+                  <option value="">None</option>
+                  <option value="♂">Male</option>
+                  <option value="♀">Female</option>
+                  <option value="⚧">Other</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="text-[9px] font-bold uppercase mb-1 block" style="color:var(--petal)">Zodiac Sign</label>
+              <select id="input-zodiac-2" class="input-field">
+                <option>Aries</option><option>Taurus</option><option>Gemini</option>
+                <option>Cancer</option><option>Leo</option><option>Virgo</option>
+                <option>Libra</option><option>Scorpio</option><option>Sagittarius</option>
+                <option>Capricorn</option><option>Aquarius</option><option>Pisces</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Save / Close -->
+          <div class="flex gap-3 pt-2">
+            <button onclick="saveProfiles()" class="btn-primary flex-1">Save Changes</button>
+            <button onclick="toggleModal('profile-modal', false)"
+                    class="px-5 font-bold text-sm cursor-pointer"
+                    style="background:none; border:none; color:var(--petal)">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Modal: Edit Quote -->
-    <div id="quote-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-6 modal-overlay">
-        <div class="w-full max-w-sm bg-white rounded-[2.5rem] p-8 shadow-2xl">
-            <h2 class="text-xl font-bold text-rose-900 mb-4 text-center">Update Quote</h2>
-            <textarea id="input-quote" rows="4" class="w-full bg-rose-50 rounded-2xl px-4 py-4 text-sm focus:ring-2 focus:ring-rose-200 outline-none resize-none mb-6"></textarea>
-            <div class="flex flex-col space-y-2">
-                <button onclick="saveQuote()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-2xl">Update Text</button>
-                <button onclick="toggleModal('quote-modal', false)" class="w-full py-2 text-rose-300 font-bold text-xs uppercase tracking-widest">Cancel</button>
-            </div>
+    <!-- ═══════════ MODAL: Edit Quote ═══════════ -->
+    <div id="quote-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-5 modal-overlay" style="display:none">
+      <div class="w-full max-w-sm glass-deep rounded-[2rem] p-7 shadow-2xl">
+        <div class="text-center mb-5">
+          <h2 class="font-display text-3xl" style="color:var(--deep)">Our Quote</h2>
+          <p class="text-[10px] font-bold uppercase tracking-widest" style="color:var(--petal)">Edit your message</p>
         </div>
+        <textarea id="input-quote" rows="4"
+                  class="input-field mb-5 resize-none"
+                  style="border-radius:1rem; padding:1rem; font-family:'Cormorant Garamond',serif; font-size:1rem; font-style:italic"></textarea>
+        <div class="flex flex-col gap-2">
+          <button onclick="saveQuote()" class="btn-primary w-full">Update Quote</button>
+          <button onclick="toggleModal('quote-modal', false)" class="btn-link">Cancel</button>
+        </div>
+      </div>
     </div>
 
-    <!-- Modal: Anniversary Settings -->
-    <div id="settings-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-6 modal-overlay">
-        <div class="w-full max-w-sm bg-white rounded-[2.5rem] p-8 shadow-2xl">
-            <h2 class="text-xl font-bold text-rose-900 mb-6 text-center">Anniversary Date</h2>
-            <input type="date" id="anniversary-input" class="w-full bg-rose-50 rounded-2xl px-6 py-4 text-lg font-bold text-center mb-6 outline-none focus:ring-2 focus:ring-rose-200">
-            <button onclick="saveAnniversary()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-2xl mb-2">Save Date</button>
-            <button onclick="toggleModal('settings-modal', false)" class="w-full py-2 text-rose-300 text-xs font-black uppercase tracking-widest">Cancel</button>
+    <!-- ═══════════ MODAL: Anniversary Date ═══════════ -->
+    <div id="settings-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-5 modal-overlay" style="display:none">
+      <div class="w-full max-w-sm glass-deep rounded-[2rem] p-7 shadow-2xl">
+        <div class="text-center mb-5">
+          <h2 class="font-display text-3xl" style="color:var(--deep)">Our Date</h2>
+          <p class="text-[10px] font-bold uppercase tracking-widest" style="color:var(--petal)">When it all began</p>
         </div>
+        <input type="date" id="anniversary-input"
+               class="input-field text-center mb-5"
+               style="font-size:1rem; font-weight:700; border-radius:1rem; padding:1rem;" />
+        <button onclick="saveAnniversary()" class="btn-primary w-full mb-2">Save Date</button>
+        <button onclick="toggleModal('settings-modal', false)" class="btn-link">Cancel</button>
+      </div>
     </div>
 
     <script>
-        // Initialize Telegram WebApp
-const tg = window.Telegram.WebApp;
-tg.expand(); // Opens the app to full screen
-tg.ready();  // Tells Telegram the app is loaded
-        const STORAGE_KEY = 'together_forever_local_data_v2';
-        let anniversaryDate = new Date().toISOString().split('T')[0];
-        let currentFrame = 'frame-classic';
-        let currentShape = 'shape-circle';
+      const tg = window.Telegram?.WebApp;
+      if (tg) { tg.expand(); tg.ready(); }
 
-        const ui = {
-            mainFrame: document.getElementById('main-frame'),
-            imageContainer: document.getElementById('image-container'),
-            mainCounter: document.getElementById('main-counter'),
-            hours: document.getElementById('count-hours'),
-            minutes: document.getElementById('count-minutes'),
-            seconds: document.getElementById('count-seconds'),
-            headerYear: document.getElementById('header-year'),
-            profileImage: document.getElementById('profile-image'),
-            syncStatus: document.getElementById('sync-status'),
-            quote: document.getElementById('daily-quote'),
-            names: [document.getElementById('name-1'), document.getElementById('name-2')],
-            zodiacs: [document.getElementById('zodiac-1'), document.getElementById('zodiac-2')],
-            genders: [document.getElementById('gender-1'), document.getElementById('gender-2')],
-            inputs: {
-                name1: document.getElementById('input-name-1'),
-                name2: document.getElementById('input-name-2'),
-                gender1: document.getElementById('input-gender-1'),
-                gender2: document.getElementById('input-gender-2'),
-                zodiac1: document.getElementById('input-zodiac-1'),
-                zodiac2: document.getElementById('input-zodiac-2'),
-                quote: document.getElementById('input-quote'),
-                anniversary: document.getElementById('anniversary-input')
-            }
+      const STORAGE_KEY = "together_forever_local_data_v2";
+      let anniversaryDate = new Date().toISOString().split("T")[0];
+      let currentFrame = "frame-classic";
+      let currentShape = "shape-circle";
+
+      const ui = {
+        mainFrame: document.getElementById("main-frame"),
+        imageContainer: document.getElementById("image-container"),
+        mainCounter: document.getElementById("main-counter"),
+        hours: document.getElementById("count-hours"),
+        minutes: document.getElementById("count-minutes"),
+        seconds: document.getElementById("count-seconds"),
+        headerYear: document.getElementById("header-year"),
+        profileImage: document.getElementById("profile-image"),
+        syncStatus: document.getElementById("sync-status"),
+        quote: document.getElementById("daily-quote"),
+        names: [document.getElementById("name-1"), document.getElementById("name-2")],
+        zodiacs: [document.getElementById("zodiac-1"), document.getElementById("zodiac-2")],
+        genders: [document.getElementById("gender-1"), document.getElementById("gender-2")],
+        inputs: {
+          name1: document.getElementById("input-name-1"),
+          name2: document.getElementById("input-name-2"),
+          gender1: document.getElementById("input-gender-1"),
+          gender2: document.getElementById("input-gender-2"),
+          zodiac1: document.getElementById("input-zodiac-1"),
+          zodiac2: document.getElementById("input-zodiac-2"),
+          quote: document.getElementById("input-quote"),
+          anniversary: document.getElementById("anniversary-input"),
+        },
+      };
+
+      function showStatus(text, color = "#c9974c") {
+        ui.syncStatus.innerText = text;
+        ui.syncStatus.style.background = color;
+        ui.syncStatus.style.display = "block";
+        setTimeout(() => (ui.syncStatus.style.display = "none"), 2800);
+      }
+
+      function saveData(updates) {
+        const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...existing, ...updates }));
+        showStatus("✨ SAVED", "#7cba7e");
+      }
+
+      function loadData() {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        if (data.anniversary_date) anniversaryDate = data.anniversary_date;
+        if (data.photo_url) ui.profileImage.src = data.photo_url;
+
+        ui.names[0].innerText = data.name_1 || "Partner 1";
+        ui.zodiacs[0].innerText = data.zodiac_1 || "Aries";
+        ui.genders[0].innerText = data.gender_1 || "";
+        ui.inputs.name1.value = data.name_1 || "Partner 1";
+        ui.inputs.gender1.value = data.gender_1 || "";
+        ui.inputs.zodiac1.value = data.zodiac_1 || "Aries";
+
+        ui.names[1].innerText = data.name_2 || "Partner 2";
+        ui.zodiacs[1].innerText = data.zodiac_2 || "Leo";
+        ui.genders[1].innerText = data.gender_2 || "";
+        ui.inputs.name2.value = data.name_2 || "Partner 2";
+        ui.inputs.gender2.value = data.gender_2 || "";
+        ui.inputs.zodiac2.value = data.zodiac_2 || "Leo";
+
+        if (data.quote) ui.quote.innerText = data.quote;
+        ui.inputs.quote.value = data.quote || "Every day is a new page in our love story.";
+        ui.inputs.anniversary.value = anniversaryDate;
+
+        currentFrame = data.frame_style || "frame-classic";
+        currentShape = data.photo_shape || "shape-circle";
+        applyVisuals();
+        updateCounter();
+      }
+
+      function applyVisuals() {
+        const isGlam = currentFrame === "frame-glam";
+        const isHeart = currentShape === "shape-heart";
+
+        // Frame + shape classes on the ring wrapper
+        ui.mainFrame.className = `profile-ring ${currentFrame} ${currentShape} photo-glow group cursor-pointer`;
+
+        // Image container shape
+        ui.imageContainer.className = `w-36 h-36 overflow-hidden bg-rose-50 ${currentShape} transition-all`;
+
+        // Hover overlay shape
+        const overlay = document.getElementById("hover-overlay");
+        if (overlay) {
+          overlay.style.borderRadius = isHeart ? "0" : currentShape === "shape-square" ? "2rem" : "50%";
+          overlay.style.clipPath = isHeart ? "url(#heart-clip)" : "none";
+        }
+
+        // Glam ring glow
+        const glamRing = document.getElementById("glam-ring");
+        if (glamRing) glamRing.style.display = isGlam ? "block" : "none";
+
+        // Glam orbiting sparkles
+        const sparkleContainer = document.getElementById("glam-sparkles");
+        sparkleContainer.innerHTML = "";
+        if (isGlam) {
+          const colors = ["#ffd700","#ff69b4","#fff176","#e91e8c","#ffccf9","#ffe066"];
+          const count = 8;
+          for (let i = 0; i < count; i++) {
+            const s = document.createElement("div");
+            s.className = "glam-sparkle";
+            const radius = isHeart ? 68 : 72;
+            s.style.setProperty("--radius", radius + "px");
+            s.style.setProperty("--dur", (1.8 + i * 0.15) + "s");
+            s.style.animationDelay = (i * (360 / count) / 360 * (1.8 + i * 0.15)) + "s";
+            s.style.background = colors[i % colors.length];
+            s.style.boxShadow = `0 0 5px 3px ${colors[i % colors.length]}99`;
+            s.style.transform = `rotate(${i * (360/count)}deg) translateX(${radius}px) rotate(-${i*(360/count)}deg)`;
+            // Override animation with a unique offset
+            s.style.animation = `sparkleOrbit ${1.8 + i * 0.12}s linear ${(i / count) * (1.8 + i * 0.12)}s infinite`;
+            sparkleContainer.appendChild(s);
+          }
+        }
+
+        // Frame option cards
+        document.querySelectorAll("[id^='opt-frame-']").forEach(c => c.classList.remove("selected"));
+        const frameKey = currentFrame.replace("frame-", "");
+        const frameOpt = document.getElementById(`opt-frame-${frameKey}`);
+        if (frameOpt) frameOpt.classList.add("selected");
+
+        // Shape option cards
+        document.querySelectorAll("[id^='opt-shape-']").forEach(c => c.classList.remove("selected"));
+        const shapeKey = currentShape.replace("shape-", "");
+        const shapeOpt = document.getElementById(`opt-shape-${shapeKey}`);
+        if (shapeOpt) shapeOpt.classList.add("selected");
+      }
+
+      function selectShape(s) { currentShape = s; applyVisuals(); }
+
+      function updateCounter() {
+        const start = new Date(anniversaryDate);
+        const now = new Date();
+        const diff = now - start;
+        if (isNaN(start.getTime()) || diff < 0) { ui.mainCounter.innerText = "0"; return; }
+        ui.mainCounter.innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+        ui.hours.innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        ui.minutes.innerText = Math.floor((diff / 1000 / 60) % 60);
+        ui.seconds.innerText = Math.floor((diff / 1000) % 60);
+        ui.headerYear.innerText = start.getFullYear();
+      }
+
+      function saveProfiles() {
+        const u = {
+          name_1: ui.inputs.name1.value, gender_1: ui.inputs.gender1.value,
+          zodiac_1: ui.inputs.zodiac1.value, name_2: ui.inputs.name2.value,
+          gender_2: ui.inputs.gender2.value, zodiac_2: ui.inputs.zodiac2.value,
+          frame_style: currentFrame, photo_shape: currentShape
         };
+        ui.names[0].innerText = u.name_1; ui.genders[0].innerText = u.gender_1; ui.zodiacs[0].innerText = u.zodiac_1;
+        ui.names[1].innerText = u.name_2; ui.genders[1].innerText = u.gender_2; ui.zodiacs[1].innerText = u.zodiac_2;
+        saveData(u);
+        toggleModal("profile-modal", false);
+      }
 
-        function showStatus(text, color = 'bg-rose-500') {
-            ui.syncStatus.innerText = text;
-            ui.syncStatus.className = `fixed top-6 right-6 z-[200] px-5 py-2 rounded-full glass text-[9px] text-white font-black ${color}`;
-            ui.syncStatus.style.display = 'block';
-            setTimeout(() => ui.syncStatus.style.display = 'none', 3000);
-        }
+      function saveQuote() {
+        const txt = ui.inputs.quote.value;
+        ui.quote.innerText = txt;
+        saveData({ quote: txt });
+        toggleModal("quote-modal", false);
+      }
 
-        function saveData(updates) {
-            const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-            const newData = { ...existing, ...updates };
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
-            showStatus("SAVED LOCALLY ✨", "bg-green-500");
-        }
+      function saveAnniversary() {
+        anniversaryDate = ui.inputs.anniversary.value;
+        saveData({ anniversary_date: anniversaryDate });
+        updateCounter();
+        toggleModal("settings-modal", false);
+      }
 
-        function loadData() {
-            const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-            
-            if (data.anniversary_date) anniversaryDate = data.anniversary_date;
-            if (data.photo_url) ui.profileImage.src = data.photo_url;
-            
-            // Partner 1
-            ui.names[0].innerText = data.name_1 || "Partner 1";
-            ui.zodiacs[0].innerText = data.zodiac_1 || "Aries";
-            ui.genders[0].innerText = data.gender_1 || "";
-            ui.inputs.name1.value = data.name_1 || "Partner 1";
-            ui.inputs.gender1.value = data.gender_1 || "";
-            ui.inputs.zodiac1.value = data.zodiac_1 || "Aries";
+      function selectFrame(f) { currentFrame = f; applyVisuals(); }
 
-            // Partner 2
-            ui.names[1].innerText = data.name_2 || "Partner 2";
-            ui.zodiacs[1].innerText = data.zodiac_2 || "Leo";
-            ui.genders[1].innerText = data.gender_2 || "";
-            ui.inputs.name2.value = data.name_2 || "Partner 2";
-            ui.inputs.gender2.value = data.gender_2 || "";
-            ui.inputs.zodiac2.value = data.zodiac_2 || "Leo";
+      function toggleModal(id, show) {
+        const el = document.getElementById(id);
+        el.style.display = show ? "flex" : "none";
+      }
 
-            if (data.quote) ui.quote.innerText = data.quote;
-            ui.inputs.quote.value = data.quote || "Every day is a new page in our love story.";
-            ui.inputs.anniversary.value = anniversaryDate;
+      // Image upload
+      document.getElementById("image-input").addEventListener("change", function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (file.size > 1 * 1024 * 1024) { showStatus("PHOTO TOO LARGE (MAX 1MB)", "#e57373"); return; }
+        const reader = new FileReader();
+        reader.onload = (ev) => { ui.profileImage.src = ev.target.result; saveData({ photo_url: ev.target.result }); };
+        reader.readAsDataURL(file);
+      });
 
-            currentFrame = data.frame_style || 'frame-classic';
-            
-            applyVisuals();
-            updateCounter();
-        }
+      // Particles
+      const EMOJIS = ["🌸", "✨", "🌷", "💕", "❤️", "🫧", "🌹"];
+      function createParticle() {
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = (Math.random() * 100) + "vw";
+        p.style.bottom = "-20px";
+        p.style.fontSize = (Math.random() * 14 + 8) + "px";
+        p.style.setProperty("--drift", (Math.random() * 80 - 40) + "px");
+        p.style.animationDuration = (Math.random() * 12 + 8) + "s";
+        p.style.animationDelay = "0s";
+        p.innerHTML = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+        document.getElementById("particles").appendChild(p);
+        setTimeout(() => p.remove(), 20000);
+      }
 
-        function applyVisuals() {
-            ui.mainFrame.className = `profile-ring ${currentFrame} ${currentShape} group cursor-pointer`;
-            ui.imageContainer.className = `w-44 h-44 overflow-hidden bg-rose-50 border-4 border-white transition-all ${currentShape}`;
-            
-            document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
-            const frameOpt = document.getElementById(`opt-frame-${currentFrame.replace('frame-', '')}`);
-            if(frameOpt) frameOpt.classList.add('selected');
-        }
-
-        function updateCounter() {
-            const start = new Date(anniversaryDate);
-            const now = new Date();
-            const diff = now - start;
-            if (isNaN(start.getTime()) || diff < 0) {
-                ui.mainCounter.innerText = "0";
-                return;
-            }
-
-            ui.mainCounter.innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
-            ui.hours.innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            ui.minutes.innerText = Math.floor((diff / 1000 / 60) % 60);
-            ui.seconds.innerText = Math.floor((diff / 1000) % 60);
-            ui.headerYear.innerText = start.getFullYear();
-        }
-
-        function saveProfiles() {
-            const updates = {
-                name_1: ui.inputs.name1.value,
-                gender_1: ui.inputs.gender1.value,
-                zodiac_1: ui.inputs.zodiac1.value,
-                name_2: ui.inputs.name2.value,
-                gender_2: ui.inputs.gender2.value,
-                zodiac_2: ui.inputs.zodiac2.value,
-                frame_style: currentFrame
-            };
-            
-            // UI Update
-            ui.names[0].innerText = updates.name_1;
-            ui.genders[0].innerText = updates.gender_1;
-            ui.zodiacs[0].innerText = updates.zodiac_1;
-            ui.names[1].innerText = updates.name_2;
-            ui.genders[1].innerText = updates.gender_2;
-            ui.zodiacs[1].innerText = updates.zodiac_2;
-
-            saveData(updates);
-            toggleModal('profile-modal', false);
-        }
-
-        function saveQuote() {
-            const txt = ui.inputs.quote.value;
-            ui.quote.innerText = txt;
-            saveData({ quote: txt });
-            toggleModal('quote-modal', false);
-        }
-
-        function saveAnniversary() {
-            anniversaryDate = ui.inputs.anniversary.value;
-            saveData({ anniversary_date: anniversaryDate });
-            updateCounter();
-            toggleModal('settings-modal', false);
-        }
-
-        function selectFrame(f) {
-            currentFrame = f;
-            applyVisuals();
-        }
-
-        function toggleModal(id, show) {
-            document.getElementById(id).style.display = show ? 'flex' : 'none';
-        }
-
-        // Image Handling
-        document.getElementById('image-input').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            if (file.size > 1 * 1024 * 1024) {
-                showStatus("PHOTO TOO LARGE (MAX 1MB)", "bg-red-500");
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                ui.profileImage.src = ev.target.result;
-                saveData({ photo_url: ev.target.result });
-            };
-            reader.readAsDataURL(file);
-        });
-
-        // Background Particles
-        function createParticle(containerId, emoji) {
-            const p = document.createElement('div');
-            p.className = containerId === 'bubbles' ? 'bubble' : 'heart-particle';
-            p.style.left = Math.random() * 100 + 'vw';
-            p.style.bottom = '-20px';
-            p.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            p.innerHTML = emoji;
-            p.style.animationDuration = (Math.random() * 10 + 5) + 's';
-            document.getElementById(containerId).appendChild(p);
-            setTimeout(() => p.remove(), 15000);
-        }
-
-        setInterval(() => createParticle('bubbles', '⚪'), 4000);
-        setInterval(() => createParticle('particles', '❤️'), 6000);
-        setInterval(updateCounter, 1000);
-        window.onload = loadData;
+      setInterval(createParticle, 3000);
+      setInterval(updateCounter, 1000);
+      window.onload = loadData;
     </script>
-</body>
+  </body>
 </html>
