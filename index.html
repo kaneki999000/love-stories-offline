@@ -6,6 +6,7 @@
     <title>Our Love Story | Together Forever</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
             --rose-50: #fff1f2;
@@ -298,6 +299,10 @@
     </div>
 
     <script>
+        // Initialize Telegram WebApp
+const tg = window.Telegram.WebApp;
+tg.expand(); // Opens the app to full screen
+tg.ready();  // Tells Telegram the app is loaded
         const STORAGE_KEY = 'together_forever_local_data_v2';
         let anniversaryDate = new Date().toISOString().split('T')[0];
         let currentFrame = 'frame-classic';
