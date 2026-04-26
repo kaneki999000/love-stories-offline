@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Our Love Story | Together Forever</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --rose-50: #fff1f2;
+        --rose-100: #ffe4e6;
+        --rose-200: #fecdd3;
+        --rose-400: #fb7185;
+        --rose-500: #f43f5e;
+        --rose-600: #e11d48;
+        --love-gradient: linear-gradient(135deg, #fb7185 0%, #e11d48 100%);
+        --gold-gradient: linear-gradient(135deg, #fde68a 0%, #f59e0b 100%);
+        --soft-gradient: linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%);
+      }
+
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background: radial-gradient(
+          circle at top left,
+          #fff1f2,
+          #ffe4e6 40%,
+          #ffdada 100%
+        );
+        min-height: 100vh;
+        color: #4c0519;
+        overflow-x: hidden;
+      }
+
+      .font-cursive {
+        font-family: "Dancing Script", cursive;
+      }
+      .font-serif {
+        font-family: "Playfair Display", serif;
+      }
+
+      .glass {
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        box-shadow: 0 20px 50px -15px rgba(225, 29, 72, 0.1);
+      }
+
+      /* Shape Utilities */
+      .shape-circle {
+        border-radius: 50% !important;
+      }
+      .shape-square {
+        border-radius: 2.5rem !important;
+      }
+      .shape-heart {
+        clip-path: url(#heart-clip) !important;
+      }
+
+      .profile-ring {
+        position: relative;
+        padding: 8px;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .frame-classic {
+        background:
+          linear-gradient(white, white) padding-box,
+          var(--love-gradient) border-box;
+        border: 4px solid transparent;
+      }
+      .frame-gold {
+        background:
+          linear-gradient(white, white) padding-box,
+          var(--gold-gradient) border-box;
+        border: 6px solid transparent;
+      }
+      .frame-soft {
+        background:
+          linear-gradient(white, white) padding-box,
+          var(--soft-gradient) border-box;
+        border: 4px solid transparent;
+      }
+      .frame-none {
+        background: white;
+        padding: 4px;
+      }
+
+      .heart-glow {
+        animation: heartbeat 2s ease-in-out infinite;
+      }
+      @keyframes heartbeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      .counter-gradient {
+        background: var(--love-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .bubble,
+      .heart-particle {
+        position: fixed;
+        pointer-events: none;
+        opacity: 0.3;
+        animation: floatUp linear infinite;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) translateX(0);
+          opacity: 0;
+        }
+        20% {
+          opacity: 0.3;
+        }
+        80% {
+          opacity: 0.3;
+        }
+        100% {
+          transform: translateY(-100vh) translateX(50px);
+          opacity: 0;
+        }
+      }
+
+      .custom-scroll::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scroll::-webkit-scrollbar-thumb {
+        background: #fecdd3;
+        border-radius: 10px;
+      }
+
+      .option-card {
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s;
+      }
+      .option-card.selected {
+        border-color: var(--rose-400);
+        background: var(--rose-50);
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" class="absolute">
+      <defs>
+        <clipPath id="heart-clip" clipPathUnits="objectBoundingBox">
+          <path
+            d="M0.5,0.18 C0.5,0.18,0.42,0,0.25,0 C0.08,0,0,0.15,0,0.32 C0,0.55,0.2,0.75,0.5,1 C0.8,0.75,1,0.55,1,0.32 C1,0.15,0.92,0,0.75,0 C0.58,0,0.5,0.18,0.5,0.18"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+
+    <div id="particles" class="fixed inset-0 z-0"></div>
+    <div id="bubbles" class="fixed inset-0 z-0"></div>
+
+    <div
+      id="sync-status"
+      class="fixed top-6 right-6 z-50 px-4 py-2 rounded-full glass text-[10px] font-black uppercase hidden"
+    ></div>
+
+    <main
+      class="relative z-10 max-w-lg mx-auto px-6 py-10 flex flex-col min-h-screen"
+    >
+      <header class="text-center mb-10">
+        <h1 class="font-cursive text-6xl text-rose-600 mb-2">Sweetheart</h1>
+        <span
+          class="text-rose-400 text-[10px] font-bold uppercase tracking-[0.4em]"
+          >Est. <span id="header-year">----</span></span
+        >
+      </header>
+
+      <section
+        class="glass rounded-[3.5rem] p-8 mb-8 text-center relative overflow-hidden"
+      >
+        <div class="relative inline-block mb-8">
+          <div
+            id="main-frame"
+            class="profile-ring frame-classic shape-circle group cursor-pointer"
+            onclick="document.getElementById('image-input').click()"
+          >
+            <div
+              id="image-container"
+              class="w-44 h-44 overflow-hidden bg-rose-50 border-4 border-white transition-all shape-circle"
+            >
+              <img
+                id="profile-image"
+                src="https://api.dicebear.com/7.x/avataaars/svg?seed=Love"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div
+              class="absolute inset-2 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm rounded-full"
+            >
+              <span class="text-white text-[10px] font-bold uppercase"
+                >Change Photo</span
+              >
+            </div>
+          </div>
+          <input type="file" id="image-input" accept="image/*" class="hidden" />
+        </div>
+
+        <div class="flex items-center justify-center space-x-6 mb-10">
+          <div class="text-right flex-1">
+            <p id="name-1" class="text-xl font-bold text-rose-950 truncate">
+              Partner 1
+            </p>
+            <p
+              id="zodiac-1"
+              class="text-[10px] text-rose-400 font-black uppercase tracking-widest"
+            >
+              Zodiac
+            </p>
+          </div>
+          <div class="heart-glow text-3xl">💝</div>
+          <div class="text-left flex-1">
+            <p id="name-2" class="text-xl font-bold text-rose-950 truncate">
+              Partner 2
+            </p>
+            <p
+              id="zodiac-2"
+              class="text-[10px] text-rose-400 font-black uppercase tracking-widest"
+            >
+              Zodiac
+            </p>
+          </div>
+        </div>
+
+        <div class="mb-10 py-6 border-y border-rose-100/50">
+          <div
+            id="main-counter"
+            class="text-7xl font-black counter-gradient tracking-tighter"
+          >
+            0
+          </div>
+          <div
+            class="text-rose-900/20 text-xs font-black uppercase tracking-[0.4em] mt-2"
+          >
+            Days Together
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center px-4">
+          <div class="flex flex-col items-center flex-1">
+            <div id="count-hours" class="text-2xl font-extrabold text-rose-950">
+              0
+            </div>
+            <div class="text-[9px] text-rose-400 font-black uppercase">
+              Hours
+            </div>
+          </div>
+          <div class="flex flex-col items-center flex-1">
+            <div
+              id="count-minutes"
+              class="text-2xl font-extrabold text-rose-950"
+            >
+              0
+            </div>
+            <div class="text-[9px] text-rose-400 font-black uppercase">
+              Mins
+            </div>
+          </div>
+          <div class="flex flex-col items-center flex-1">
+            <div
+              id="count-seconds"
+              class="text-2xl font-extrabold text-rose-500"
+            >
+              0
+            </div>
+            <div class="text-[9px] text-rose-400 font-black uppercase">
+              Secs
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="glass rounded-[2.5rem] p-8 mb-8 text-center italic relative">
+        <p id="daily-quote" class="text-rose-800 font-serif text-lg">
+          Every day is a new page in our love story.
+        </p>
+        <button
+          onclick="toggleModal('quote-modal', true)"
+          class="absolute top-4 right-4 text-rose-200 hover:text-rose-400 transition-colors"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex flex-col space-y-4 mb-12">
+        <button
+          onclick="toggleModal('profile-modal', true)"
+          class="w-full glass bg-white/60 rounded-3xl py-5 text-rose-900 font-bold"
+        >
+          Personalize Our Profile
+        </button>
+        <button
+          onclick="toggleModal('settings-modal', true)"
+          class="w-full py-2 text-[10px] font-black text-rose-300 uppercase tracking-widest"
+        >
+          Adjust Anniversary Date
+        </button>
+      </div>
+    </main>
+
+    <script>
+      const STORAGE_KEY = "together_forever_local_data";
+      let anniversaryDate = new Date().toISOString().split("T")[0];
+      let currentFrame = "frame-classic";
+      let currentShape = "shape-circle";
+
+      const ui = {
+        mainFrame: document.getElementById("main-frame"),
+        imageContainer: document.getElementById("image-container"),
+        mainCounter: document.getElementById("main-counter"),
+        hours: document.getElementById("count-hours"),
+        minutes: document.getElementById("count-minutes"),
+        seconds: document.getElementById("count-seconds"),
+        headerYear: document.getElementById("header-year"),
+        profileImage: document.getElementById("profile-image"),
+        syncStatus: document.getElementById("sync-status"),
+        quote: document.getElementById("daily-quote"),
+        names: [
+          document.getElementById("name-1"),
+          document.getElementById("name-2"),
+        ],
+        zodiacs: [
+          document.getElementById("zodiac-1"),
+          document.getElementById("zodiac-2"),
+        ],
+      };
+
+      function showStatus(text, color = "bg-rose-500") {
+        ui.syncStatus.innerText = text;
+        ui.syncStatus.className = `fixed top-6 right-6 z-[200] px-5 py-2 rounded-full glass text-[9px] text-white font-black ${color}`;
+        ui.syncStatus.style.display = "block";
+        setTimeout(() => (ui.syncStatus.style.display = "none"), 3000);
+      }
+
+      // --- LOCAL STORAGE CORE ---
+      function saveData(updates) {
+        const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        const newData = { ...existing, ...updates };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
+        showStatus("SAVED TO DEVICE ✨", "bg-green-500");
+      }
+
+      function loadData() {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        if (data.anniversary_date) anniversaryDate = data.anniversary_date;
+        if (data.photo_url) ui.profileImage.src = data.photo_url;
+        if (data.name_1) ui.names[0].innerText = data.name_1;
+        if (data.name_2) ui.names[1].innerText = data.name_2;
+        if (data.quote) ui.quote.innerText = data.quote;
+
+        currentFrame = data.frame_style || "frame-classic";
+        currentShape = data.profile_shape || "shape-circle";
+
+        applyVisuals();
+        updateCounter();
+      }
+
+      function applyVisuals() {
+        ui.mainFrame.className = `profile-ring ${currentFrame} ${currentShape} group cursor-pointer`;
+        ui.imageContainer.className = `w-44 h-44 overflow-hidden bg-rose-50 border-4 border-white transition-all ${currentShape}`;
+        if (currentShape === "shape-heart")
+          ui.imageContainer.style.clipPath = "url(#heart-clip)";
+        else ui.imageContainer.style.clipPath = "none";
+      }
+
+      function updateCounter() {
+        const start = new Date(anniversaryDate);
+        const now = new Date();
+        const diff = now - start;
+        if (isNaN(start.getTime()) || diff < 0) return;
+
+        ui.mainCounter.innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+        ui.hours.innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        ui.minutes.innerText = Math.floor((diff / 1000 / 60) % 60);
+        ui.seconds.innerText = Math.floor((diff / 1000) % 60);
+        ui.headerYear.innerText = start.getFullYear();
+      }
+
+      // --- LOCAL IMAGE HANDLING ---
+      document
+        .getElementById("image-input")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (!file) return;
+
+          // Optional: Check file size (localStorage has ~5MB limit)
+          if (file.size > 2 * 1024 * 1024) {
+            alert("Please choose a smaller image (under 2MB)");
+            return;
+          }
+
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            const base64 = event.target.result;
+            ui.profileImage.src = base64;
+            saveData({ photo_url: base64 });
+          };
+          reader.readAsDataURL(file);
+        });
+
+      function toggleModal(id, show) {
+        document.getElementById(id).style.display = show ? "flex" : "none";
+      }
+
+      // Initialize
+      setInterval(updateCounter, 1000);
+      window.onload = loadData;
+    </script>
+  </body>
+</html>
