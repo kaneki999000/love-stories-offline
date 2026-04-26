@@ -52,7 +52,6 @@
         .frame-classic { background: linear-gradient(white, white) padding-box, var(--love-gradient) border-box; border: 4px solid transparent; }
         .frame-gold { background: linear-gradient(white, white) padding-box, var(--gold-gradient) border-box; border: 6px solid transparent; }
         .frame-soft { background: linear-gradient(white, white) padding-box, var(--soft-gradient) border-box; border: 4px solid transparent; }
-        .frame-none { background: white; padding: 4px; }
 
         .heart-glow { animation: heartbeat 2s ease-in-out infinite; }
         @keyframes heartbeat {
@@ -89,6 +88,14 @@
         .modal-overlay {
             background: rgba(76, 5, 25, 0.4);
             backdrop-filter: blur(8px);
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23e11d48'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1rem;
         }
     </style>
 </head>
@@ -127,13 +134,19 @@
 
             <div class="flex items-center justify-center space-x-6 mb-10">
                 <div class="text-right flex-1">
-                    <p id="name-1" class="text-xl font-bold text-rose-950 truncate">Partner 1</p>
-                    <p id="zodiac-1" class="text-[10px] text-rose-400 font-black uppercase tracking-widest">Zodiac</p>
+                    <div class="flex items-center justify-end space-x-1 mb-1">
+                        <span id="gender-1" class="text-xs text-rose-300"></span>
+                        <p id="name-1" class="text-xl font-bold text-rose-950 truncate">Partner 1</p>
+                    </div>
+                    <p id="zodiac-1" class="text-[10px] text-rose-400 font-black uppercase tracking-widest">Aries</p>
                 </div>
                 <div class="heart-glow text-3xl">💝</div>
                 <div class="text-left flex-1">
-                    <p id="name-2" class="text-xl font-bold text-rose-950 truncate">Partner 2</p>
-                    <p id="zodiac-2" class="text-[10px] text-rose-400 font-black uppercase tracking-widest">Zodiac</p>
+                    <div class="flex items-center justify-start space-x-1 mb-1">
+                        <p id="name-2" class="text-xl font-bold text-rose-950 truncate">Partner 2</p>
+                        <span id="gender-2" class="text-xs text-rose-300"></span>
+                    </div>
+                    <p id="zodiac-2" class="text-[10px] text-rose-400 font-black uppercase tracking-widest">Leo</p>
                 </div>
             </div>
 
@@ -192,19 +205,69 @@
                     </div>
                 </div>
 
-                <!-- Names -->
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="text-[10px] font-black text-rose-400 uppercase tracking-widest mb-1 block">Name 1</label>
-                        <input type="text" id="input-name-1" class="w-full bg-rose-50 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-rose-200 outline-none">
+                <!-- Partner 1 Settings -->
+                <div class="p-4 bg-rose-50/50 rounded-2xl space-y-4">
+                    <p class="text-[10px] font-black text-rose-600 uppercase tracking-widest">Partner 1 (Left)</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-[9px] font-bold text-rose-400 uppercase mb-1 block">Name</label>
+                            <input type="text" id="input-name-1" class="w-full bg-white rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-rose-200 outline-none border border-rose-100">
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-bold text-rose-400 uppercase mb-1 block">Gender</label>
+                            <select id="input-gender-1" class="w-full bg-white rounded-xl px-3 py-2 text-sm outline-none border border-rose-100">
+                                <option value="">None</option>
+                                <option value="♂">Male</option>
+                                <option value="♀">Female</option>
+                                <option value="⚧">Other</option>
+                            </select>
+                        </div>
                     </div>
                     <div>
-                        <label class="text-[10px] font-black text-rose-400 uppercase tracking-widest mb-1 block">Name 2</label>
-                        <input type="text" id="input-name-2" class="w-full bg-rose-50 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-rose-200 outline-none">
+                        <label class="text-[9px] font-bold text-rose-400 uppercase mb-1 block">Zodiac Sign</label>
+                        <select id="input-zodiac-1" class="w-full bg-white rounded-xl px-3 py-2 text-sm outline-none border border-rose-100">
+                            <option value="Aries">Aries</option><option value="Taurus">Taurus</option>
+                            <option value="Gemini">Gemini</option><option value="Cancer">Cancer</option>
+                            <option value="Leo">Leo</option><option value="Virgo">Virgo</option>
+                            <option value="Libra">Libra</option><option value="Scorpio">Scorpio</option>
+                            <option value="Sagittarius">Sagittarius</option><option value="Capricorn">Capricorn</option>
+                            <option value="Aquarius">Aquarius</option><option value="Pisces">Pisces</option>
+                        </select>
                     </div>
                 </div>
 
-                <div class="flex space-x-3">
+                <!-- Partner 2 Settings -->
+                <div class="p-4 bg-rose-50/50 rounded-2xl space-y-4">
+                    <p class="text-[10px] font-black text-rose-600 uppercase tracking-widest">Partner 2 (Right)</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-[9px] font-bold text-rose-400 uppercase mb-1 block">Name</label>
+                            <input type="text" id="input-name-2" class="w-full bg-white rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-rose-200 outline-none border border-rose-100">
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-bold text-rose-400 uppercase mb-1 block">Gender</label>
+                            <select id="input-gender-2" class="w-full bg-white rounded-xl px-3 py-2 text-sm outline-none border border-rose-100">
+                                <option value="">None</option>
+                                <option value="♂">Male</option>
+                                <option value="♀">Female</option>
+                                <option value="⚧">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[9px] font-bold text-rose-400 uppercase mb-1 block">Zodiac Sign</label>
+                        <select id="input-zodiac-2" class="w-full bg-white rounded-xl px-3 py-2 text-sm outline-none border border-rose-100">
+                            <option value="Aries">Aries</option><option value="Taurus">Taurus</option>
+                            <option value="Gemini">Gemini</option><option value="Cancer">Cancer</option>
+                            <option value="Leo">Leo</option><option value="Virgo">Virgo</option>
+                            <option value="Libra">Libra</option><option value="Scorpio">Scorpio</option>
+                            <option value="Sagittarius">Sagittarius</option><option value="Capricorn">Capricorn</option>
+                            <option value="Aquarius">Aquarius</option><option value="Pisces">Pisces</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex space-x-3 pt-4">
                     <button onclick="saveProfiles()" class="flex-1 bg-rose-600 text-white font-bold py-4 rounded-2xl hover:bg-rose-700 transition-all">Save Changes</button>
                     <button onclick="toggleModal('profile-modal', false)" class="px-6 py-4 text-rose-400 font-bold">Close</button>
                 </div>
@@ -235,7 +298,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = 'together_forever_local_data';
+        const STORAGE_KEY = 'together_forever_local_data_v2';
         let anniversaryDate = new Date().toISOString().split('T')[0];
         let currentFrame = 'frame-classic';
         let currentShape = 'shape-circle';
@@ -252,9 +315,15 @@
             syncStatus: document.getElementById('sync-status'),
             quote: document.getElementById('daily-quote'),
             names: [document.getElementById('name-1'), document.getElementById('name-2')],
+            zodiacs: [document.getElementById('zodiac-1'), document.getElementById('zodiac-2')],
+            genders: [document.getElementById('gender-1'), document.getElementById('gender-2')],
             inputs: {
                 name1: document.getElementById('input-name-1'),
                 name2: document.getElementById('input-name-2'),
+                gender1: document.getElementById('input-gender-1'),
+                gender2: document.getElementById('input-gender-2'),
+                zodiac1: document.getElementById('input-zodiac-1'),
+                zodiac2: document.getElementById('input-zodiac-2'),
                 quote: document.getElementById('input-quote'),
                 anniversary: document.getElementById('anniversary-input')
             }
@@ -271,7 +340,7 @@
             const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
             const newData = { ...existing, ...updates };
             localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
-            showStatus("SAVED TO DEVICE ✨", "bg-green-500");
+            showStatus("SAVED LOCALLY ✨", "bg-green-500");
         }
 
         function loadData() {
@@ -279,18 +348,28 @@
             
             if (data.anniversary_date) anniversaryDate = data.anniversary_date;
             if (data.photo_url) ui.profileImage.src = data.photo_url;
-            if (data.name_1) ui.names[0].innerText = data.name_1;
-            if (data.name_2) ui.names[1].innerText = data.name_2;
-            if (data.quote) ui.quote.innerText = data.quote;
             
-            // Sync inputs with stored data
+            // Partner 1
+            ui.names[0].innerText = data.name_1 || "Partner 1";
+            ui.zodiacs[0].innerText = data.zodiac_1 || "Aries";
+            ui.genders[0].innerText = data.gender_1 || "";
             ui.inputs.name1.value = data.name_1 || "Partner 1";
+            ui.inputs.gender1.value = data.gender_1 || "";
+            ui.inputs.zodiac1.value = data.zodiac_1 || "Aries";
+
+            // Partner 2
+            ui.names[1].innerText = data.name_2 || "Partner 2";
+            ui.zodiacs[1].innerText = data.zodiac_2 || "Leo";
+            ui.genders[1].innerText = data.gender_2 || "";
             ui.inputs.name2.value = data.name_2 || "Partner 2";
+            ui.inputs.gender2.value = data.gender_2 || "";
+            ui.inputs.zodiac2.value = data.zodiac_2 || "Leo";
+
+            if (data.quote) ui.quote.innerText = data.quote;
             ui.inputs.quote.value = data.quote || "Every day is a new page in our love story.";
             ui.inputs.anniversary.value = anniversaryDate;
 
             currentFrame = data.frame_style || 'frame-classic';
-            currentShape = data.profile_shape || 'shape-circle';
             
             applyVisuals();
             updateCounter();
@@ -300,7 +379,6 @@
             ui.mainFrame.className = `profile-ring ${currentFrame} ${currentShape} group cursor-pointer`;
             ui.imageContainer.className = `w-44 h-44 overflow-hidden bg-rose-50 border-4 border-white transition-all ${currentShape}`;
             
-            // Sync UI highlighting for selection cards
             document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
             const frameOpt = document.getElementById(`opt-frame-${currentFrame.replace('frame-', '')}`);
             if(frameOpt) frameOpt.classList.add('selected');
@@ -323,15 +401,25 @@
         }
 
         function saveProfiles() {
-            const name1 = ui.inputs.name1.value;
-            const name2 = ui.inputs.name2.value;
-            ui.names[0].innerText = name1;
-            ui.names[1].innerText = name2;
-            saveData({ 
-                name_1: name1, 
-                name_2: name2, 
-                frame_style: currentFrame 
-            });
+            const updates = {
+                name_1: ui.inputs.name1.value,
+                gender_1: ui.inputs.gender1.value,
+                zodiac_1: ui.inputs.zodiac1.value,
+                name_2: ui.inputs.name2.value,
+                gender_2: ui.inputs.gender2.value,
+                zodiac_2: ui.inputs.zodiac2.value,
+                frame_style: currentFrame
+            };
+            
+            // UI Update
+            ui.names[0].innerText = updates.name_1;
+            ui.genders[0].innerText = updates.gender_1;
+            ui.zodiacs[0].innerText = updates.zodiac_1;
+            ui.names[1].innerText = updates.name_2;
+            ui.genders[1].innerText = updates.gender_2;
+            ui.zodiacs[1].innerText = updates.zodiac_2;
+
+            saveData(updates);
             toggleModal('profile-modal', false);
         }
 
@@ -362,8 +450,8 @@
         document.getElementById('image-input').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
-            if (file.size > 2 * 1024 * 1024) {
-                showStatus("FILE TOO LARGE (MAX 2MB)", "bg-red-500");
+            if (file.size > 1 * 1024 * 1024) {
+                showStatus("PHOTO TOO LARGE (MAX 1MB)", "bg-red-500");
                 return;
             }
             const reader = new FileReader();
